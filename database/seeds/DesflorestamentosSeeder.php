@@ -3,7 +3,7 @@
 
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
-class DesflorestamentoSeeder extends CsvSeeder {
+class DesflorestamentosSeeder extends CsvSeeder {
 
     public function __construct()
     {
@@ -11,9 +11,11 @@ class DesflorestamentoSeeder extends CsvSeeder {
         $this->filename = base_path().'/database/seeds/csvs/desflorestamentos.csv';
         $this->offset_rows = 1;
         $this->mapping = [
-            8 => 'area',
+            6 => 'codigo_ibge_municipio',
             9 => 'desflorestamento',
+            17 => 'ano',
         ];
+        $this->should_trim = true;
     }
 
     public function run()

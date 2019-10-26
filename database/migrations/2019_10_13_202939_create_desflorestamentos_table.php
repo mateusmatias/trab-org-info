@@ -17,8 +17,9 @@ class CreateDesflorestamentosTable extends Migration
             $table->bigIncrements('id');
             $table->double('desflorestamento')->nullable();
             $table->integer('ano')->nullable();
-            $table->unsignedBigInteger('municipio_id');
-            $table->foreign('municipio_id')->references('id')->on('municipios')->onDelete('cascade');
+            $table->string('codigo_ibge_municipio')->nullable();
+            $table->unsignedBigInteger('municipio_id')->nullable();
+            $table->foreign('municipio_id')->references('id')->on('municipios')->onDelete('set null');
             $table->timestamps();
         });
     }

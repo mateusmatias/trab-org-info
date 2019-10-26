@@ -13,4 +13,8 @@ class Municipio extends Model
     public function estado(){
         return $this->belongsTo(Estado::class);
     }
+
+    public function desflorestamento(){
+        return $this->hasOne(Desflorestamento::class);
+    }
 }

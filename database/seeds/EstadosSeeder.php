@@ -14,6 +14,7 @@ class EstadosSeeder extends CsvSeeder {
             1 => 'nome',
             2 => 'sigla',
         ];
+        $this->should_trim = true;
     }
 
     public function run()

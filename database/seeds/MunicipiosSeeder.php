@@ -13,6 +13,7 @@ class MunicipiosSeeder extends CsvSeeder {
             0 => 'codigo_ibge',
             1 => 'nome',
         ];
+        $this->should_trim = true;
     }
 
     public function run()

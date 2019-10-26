@@ -11,8 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(EstadosSeeder::class);
-        $this->call(MunicipiosSeeder::class);
-        $this->call(DesflorestamentoSeeder::class);
+        //$this->call(EstadosSeeder::class);
+        //$this->call(MunicipiosSeeder::class);
+        //$this->call(DesflorestamentosSeeder::class);
+        //$this->call(RelationsSeeder::class);
+        $this->call(ModelosLinearesSeeder::class);
     }
 }
