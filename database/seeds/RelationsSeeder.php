@@ -21,7 +21,7 @@ class RelationsSeeder extends CsvSeeder
             17 => 'ano',
         ];
         $this->should_trim = true;
-        $this->insert_chunk_size = 1000;
+        $this->insert_chunk_size = 100000;
     }
 
     /**
