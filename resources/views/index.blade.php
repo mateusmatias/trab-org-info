@@ -2,7 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Predição Amazônia</title>
 
@@ -175,7 +174,7 @@
 
             <div class="row mb-4">
                 <div class="col text-center" style="color: #404040">
-                    <div>Escolha uma data e um município. A predição apresentada representa a porcentagem de área de desflorestamento na data preenchida</div>
+                    <div>Escolha uma data e um município. A predição apresentada representa a porcentagem de área de desflorestamento na data fornecida</div>
                 </div>
             </div>
 
