@@ -18,8 +18,10 @@ class ModelosLinearesSeeder extends Seeder {
             $y = [];
             $area = Municipio::find($municipio_id)->area;
             foreach ($data as $data_by_year){
-                $x[] = [$data_by_year['ano']];
-                $y[] = $data_by_year['desflorestamento'] / $area;
+                if($data_by_year['ano'] > 2005){
+                    $x[] = [$data_by_year['ano']];
+                    $y[] = $data_by_year['desflorestamento'] / $area;
+                }
             }
 
             $regression = new LeastSquares();
