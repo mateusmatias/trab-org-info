@@ -19,8 +19,10 @@ O trabalho consiste de uma aplicação web sobre o desmatamento na Amazônia Leg
 1) Abrir o terminal em alguma pasta e digitar os comandos:
 2) git clone https://github.com/mateusmatias/trab-org-info.git
 3) cd trab-org-info
-4) npm install
-5) composer install
-6) php artisan migrate  (cria as tabelas necessárias no banco de dados)
-7) php artisan db:seed  (popula as tabelas)
-8) php artisan serve    (coloca o servidor online)
+4) cp .env.example .env *(Linux)* **ou** copy .env.example .env *(Windows)*     (cria arquivo de config de ambiente)
+5) npm install              (instala dependências)
+6) composer install         (instala dependências)
+7) php artisan migrate      (cria as tabelas necessárias no banco de dados)
+8) php artisan db:seed      (popula as tabelas)
+9) php artisan key:generate (gera chave da aplicação)
+10) php artisan serve       (coloca o servidor online)
