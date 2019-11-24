@@ -83,6 +83,10 @@
             div.row{
                 padding:20px;
             }
+            #map {
+                height: 650px;
+                width: 100%;
+            }
 
         </style>
 
@@ -103,7 +107,7 @@
 
         </div>
 
-        <div id="introducao" class="margem1"">
+        <div id="introducao" class="margem1">
             <figure class="main">
                 <img id="foto1" src="{{ asset('/img/amazonia.jpg')  }}">
                 <figcaption class="cima">
@@ -179,6 +183,11 @@
                 </div>
             </div>
 
+            <div class="div-map">
+                <div id="map"></div>
+                <!--<iframe id="map" src="https://www.google.com/maps/d/embed?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&key={{ env('GOOGLE_API_KEY', '') }}" width="100%" height="650"></iframe>-->
+            </div>
+
             <div class="row mb-4">
                 <div class="col text-center" style="color: #404040">
                     <div>Escolha uma data e um município. A predição apresentada representa a porcentagem de área de desflorestamento na data fornecida</div>
@@ -230,8 +239,33 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY', '') }}&callback=initMap"></script>
 
         <script>
+            function initMap() {
+                var uluru = {lat: -25.344, lng: 131.036};
+
+                var map = new google.maps.Map(document.getElementById('map'), 
+                                              {zoom: 4, center: uluru});
+
+                var src = 'https://www.dropbox.com/s/urxmyw297196s5j/Divis%C3%B5es%20Municipais%20Amaz%C3%B4nia%20Legal.kml?dl=1';
+
+                var kmlLayer = new google.maps.KmlLayer(src, {
+                  suppressInfoWindows: true,
+                  preserveViewport: false,
+                  map: map
+                });
+
+                kmlLayer.addListener('click', function(event) {
+                  var content = event.featureData.infoWindowHtml;
+                  var testimonial = document.getElementById('capture');
+                  testimonial.innerHTML = content;
+                });
+
+                console.log(map);
+                console.log(kmlLayer);
+            }
+
             $(document).ready(function(){
 
                 // Coleta municipios provindos do backend no início
@@ -248,7 +282,6 @@
                 $('#input-data').change(function() {
                     make_prediction($('#input-municipio option:selected').val(), get_date($('#input-data').val()));
                 });
-
 
                 // responsável por mostrar os resultados na tela
                 function make_prediction(municipio_id, data){
