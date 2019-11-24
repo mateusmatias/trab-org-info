@@ -15,7 +15,7 @@ class Municipio extends Model
     }
 
     public function desflorestamento(){
-        return $this->hasOne(Desflorestamento::class);
+        return $this->hasMany(Desflorestamento::class);
     }
 
     public function modelo(){
