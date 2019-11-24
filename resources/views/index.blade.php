@@ -7,13 +7,10 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:200,600" rel="stylesheet">
 
         <!-- Styles -->
         <style>
-            body{
-                background-image: {{ asset('/img/fundo-degrade.jpg')  }};
-                background-color: rgba(0, 0, 0, 0.11);
-            }
             p {
                 text-align: justify;
                 text-indent: 50px;
@@ -24,8 +21,8 @@
             figure.logo{
                 text-align: center;
                 display: block;
-                margin-top: auto;
-                margin-bottom: auto;
+                margin-top: 10px;
+                margin-bottom: -20px;
             }
             figure.logo img{
                 width: 20%;
@@ -39,24 +36,27 @@
                 height: 100%;
                 opacity: 50%;
             }
-            figure.main figcaption{
-                padding-top: 40px;
-                padding-bottom: 20px;
-                padding-left: 80px;
-                padding-right: 80px;
+            figcaption.cima{
+                padding: 30px 80px 30px 80px;
                 text-align: center;
                 position: absolute;
                 top: 0px;
-                background-color: rgba(43, 255, 0, 0.254);
+                background-color: rgba(43, 255, 0, 0.300);
                 color: rgb(0, 0, 0);
                 width: 100%;
                 box-sizing: border-box;
             }
-            button.btn{
-                margin-top: -5px;
+            figcaption.baixo{
+                text-align: center;
+                position: absolute;
+                bottom: 40px;
+                right: 15px;
+                color: rgb(0, 0, 0);
+                width: 100%;
+                box-sizing: border-box;
             }
             #previsao{
-                background-color: rgb(190, 190, 190);
+                background-color: rgba(43, 120, 0, 0.6);;
                 padding: 20px;
                 color: black;
             }
@@ -69,17 +69,21 @@
             }
             nav#menu{
                 display: block;
-            }
-            nav#menu ul{
-                text-transform: uppercase;
-                position: relative;
-                top: 0px;
-                padding-left: 1000px;
+                padding-top: 30px;
             }
             input[type=date]::-webkit-inner-spin-button {
                 -webkit-appearance: none;
                 display: none;
             }
+            p.grande{
+                font-size: 24px;
+                text-align: center;
+                text-indent: 58px;
+            }
+            div.row{
+                padding:20px;
+            }
+
         </style>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -90,10 +94,6 @@
             <header id="cabecalho">
 
                 <nav id="menu">
-                    <ul type="none">
-                        <a href="#" class="btn btn-success btn-lg">Mapa</a>
-                        <a href="#predicao" class="btn btn-success btn-lg">Predição</a>
-                    </ul>
                     <figure class="logo">
                         <img src="{{ asset('/img/Amazon.png')  }}">
                     </figure>
@@ -103,16 +103,23 @@
 
         </div>
 
-        <div id="introducao">
-
+        <div id="introducao" class="margem1"">
             <figure class="main">
                 <img id="foto1" src="{{ asset('/img/amazonia.jpg')  }}">
-                <figcaption>
-                    <p>&rarr; É evidente que o descaso com a proteção ambiental e preservação do meio ambiente é um dos problemas mais alarmantes destacados nos últimos tempos, com riscos reais de danos permanentes ao planeta e resistência das grandes indústrias para a aprovação de medidas a favor da preservação. Nessa linha, o desconhecimento da população sobre a gravidade da problemática contribui para a perda de um aliado valioso no combate pela aprovação dessas medidas.</p>
-                    <h4>É isso que nós estamos tentando reverter.</h4>
+                <figcaption class="cima">
+                    <p class ="grande">O descaso com a proteção e a preservação do meio ambiente é um dos 
+                    problemas mais alarmantes destacado nos últimos tempos, com riscos reais de danos permanentes ao planeta.</p>
+                    <p class="grande" style="margin-top: -10px;">Nessa linha, o desconhecimento da população sobre a gravidade da situação infelizmente contribui para a perda desse valioso 
+                    aliado na luta pela aprovação de medidas pró-ambientais.</p>
+                    <h3>É isso que estamos tentando reverter.</h3>
+                </figcaption>
+                <figcaption class="baixo">
+                    <ul type="none">
+                    <a href="#" class="btn btn-success btn-lg">Mapa</a>
+                    <a href="#predicao" class="btn btn-success btn-lg">Predição</a>
+                    </ul>
                 </figcaption>
             </figure>
-
         </div>
 
         <div class="container">
@@ -181,7 +188,7 @@
             <div class="row mb-4">
                 <div class="col">
                     <div style="width: 500px; margin: auto">
-                        <small class="form-text text-muted mb-2">Município e data a serem utilizados no modelo</small>
+                        <small class="form-text mb-2" style="color: #404040">Município e data a serem utilizados no modelo</small>
                         <form class="form-inline">
                             <select id="input-municipio" class="form-control mr-2" name="input_municipio">
                                 @foreach($municipios as $municipio)
