@@ -56,7 +56,7 @@
                 box-sizing: border-box;
             }
             #previsao{
-                background-color: rgba(43, 120, 0, 0.6);;
+                background-color: rgba(43, 120, 0, 0.3);;
                 padding: 20px;
                 color: black;
             }
@@ -119,7 +119,7 @@
                 </figcaption>
                 <figcaption class="baixo">
                     <ul type="none">
-                    <a href="#" class="btn btn-success btn-lg">Mapa</a>
+                    <a href="#" class="btn btn-success btn-lg mr-3">Mapa</a>
                     <a href="#predicao" class="btn btn-success btn-lg">Predição</a>
                     </ul>
                 </figcaption>
@@ -156,9 +156,15 @@
                         dos anos no município de Altamira no Pará nos sugeriu um modelo simples e bem conhecido, o linear.
                     </div>
 
-                    <div class="text-center mb-2">
-                        <img src="{{ asset('/img/altamira.png') }}"><br>
-                        Área desflorestada em Altamira ao longo dos anos.
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <img src="{{ asset('/img/altamira.png') }}" width="100%"><br>
+                            Área desflorestada em Altamira ao longo dos anos.
+                        </div>
+                        <div class="col-6 text-center">
+                            <img src="{{ asset('/img/altamira_ajuste1.png') }}" width="100%"><br>
+                            Ajuste linear do desflorestamento de Altamira ao longo dos anos.
+                        </div>
                     </div>
 
                     <div class="mb-2">
@@ -183,10 +189,13 @@
                 </div>
             </div>
 
+            <!--
             <div class="div-map">
                 <div id="map"></div>
-                <!--<iframe id="map" src="https://www.google.com/maps/d/embed?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&key={{ env('GOOGLE_API_KEY', '') }}" width="100%" height="650"></iframe>-->
             </div>
+            -->
+
+            <iframe id="map" src="https://www.google.com/maps/d/embed?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M" width="100%" height="650"></iframe>
 
             <div class="row mb-4">
                 <div class="col text-center" style="color: #404040">
@@ -234,11 +243,18 @@
                 </div>
             </div>
 
+            <div class="row" style="color: #606060">
+                <div class="col-sm">
+                    <div id="chart"></div>
+                </div>
+            </div>
+
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY', '') }}&callback=initMap"></script>
 
         <script>
@@ -306,6 +322,13 @@
                     }
                     else
                         $('#predicao').text('-');
+
+                    // mostra o gráfico de desflorestamento
+                    desflorestamento = municipio.desflorestamento.map(x => (x.desflorestamento/municipio.area)).splice(5);
+                    x_labels = municipio.desflorestamento.map(x => x.ano).splice(5);
+                    title = "Deslorestamento de " + municipio.nome + ' ao longo dos anos';
+                    $('#chart').height(700);
+                    make_chart(desflorestamento, x_labels, title);
                 }
 
 
@@ -321,7 +344,36 @@
                     return [year, month, day].join('-');
                 }
 
+
+                function make_chart(data, x_labels, title) {
+                    $('#chart').highcharts({
+                        chart: {
+                            type: 'scatter'
+                        },
+                        title: {
+                            text: title
+                        },
+                        xAxis: {
+                            categories: x_labels,
+                            title: {
+                                text: 'Ano'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Desflorestamento / Área do município'
+                            }
+                        },
+                        series: [{
+                            name: 'Percentual de área desflorestada',
+                            data: data
+                        }],
+                        tooltip: { enabled: false },
+                    });
+                }
+
             });
+
         </script>
 
     </body>
