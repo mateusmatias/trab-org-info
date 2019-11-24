@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         set_time_limit ( 10000 );
-	$sql = base_path('dump.sql');
+	$sql = base_path('database/seeds/trab_org_info.sql');
 	DB::unprepared(file_get_contents($sql));
         set_time_limit ( 300 );
     }
