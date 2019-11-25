@@ -119,7 +119,6 @@
                 </figcaption>
                 <figcaption class="baixo">
                     <ul type="none">
-                    <a href="#" class="btn btn-success btn-lg mr-3">Mapa</a>
                     <a href="#predicao" class="btn btn-success btn-lg">Predição</a>
                     </ul>
                 </figcaption>
@@ -194,12 +193,11 @@
                 <div id="map"></div>
             </div>
             -->
-
             <iframe id="map" src="https://www.google.com/maps/d/embed?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M" width="100%" height="650"></iframe>
 
             <div class="row mb-4">
                 <div class="col text-center" style="color: #404040">
-                    <div>Escolha uma data e um município. A predição apresentada representa a porcentagem de área de desflorestamento na data fornecida</div>
+                    <div>Escolha uma data e um município. A predição apresentada representa a porcentagem de área de desflorestamento na data fornecida.</div>
                 </div>
             </div>
 
@@ -258,35 +256,59 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY', '') }}&callback=initMap"></script>
 
         <script>
+            var newMap = false;
+            var municipioIdFromNome = [];   // view para acelerar a busca do id do municipio
+
             function initMap() {
-                var uluru = {lat: -25.344, lng: 131.036};
+                if (!newMap) {
+                    return;
+                }
 
                 var map = new google.maps.Map(document.getElementById('map'), 
-                                              {zoom: 4, center: uluru});
+                                            {zoom: 5, center: new google.maps.LatLng(-7.744, -52.821)});
 
-                var src = 'https://www.dropbox.com/s/urxmyw297196s5j/Divis%C3%B5es%20Municipais%20Amaz%C3%B4nia%20Legal.kml?dl=1';
+                var kmlSrcList = [
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=LOnA1rvXc8I&cid=mp&cv=pJLDrB920vI.pt_BR.', // RR/AP/AM
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=O4zOlo71oyw&cid=mp&cv=pJLDrB920vI.pt_BR.', // TO
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=BxHHQJIiwdI&cid=mp&cv=pJLDrB920vI.pt_BR.', // PA
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=2ogwv_wmPkg&cid=mp&cv=pJLDrB920vI.pt_BR.', // RO
+                //    '', // MA
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=nEfYkB7-nT0&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 1
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=8GJQUFLj42I&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 2
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=wbhiX1tMAsk&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 3
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=TRcqsy6bh6A&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 4
+                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=oAvt8oeD77M&cid=mp&cv=pJLDrB920vI.pt_BR.'  // AC
+                ];                            
 
-                var kmlLayer = new google.maps.KmlLayer(src, {
-                  suppressInfoWindows: true,
-                  preserveViewport: false,
-                  map: map
-                });
+                for (var index in kmlSrcList) {
+                    var src = kmlSrcList[index];
 
-                kmlLayer.addListener('click', function(event) {
-                  var content = event.featureData.infoWindowHtml;
-                  var testimonial = document.getElementById('capture');
-                  testimonial.innerHTML = content;
-                });
+                    var kmlLayer = new google.maps.KmlLayer(src, {
+                      suppressInfoWindows: true,
+                      preserveViewport: false,
+                      map: map
+                    });
 
-                console.log(map);
-                console.log(kmlLayer);
+                    console.log(kmlLayer);
+                    
+                    kmlLayer.addListener('click', function(event) {
+                        var municipio = event.featureData.name;
+                        var municipioId = municipioIdFromNome[municipio];
+                        console.log('Municipio selecionado: ' + municipio + ', ID: ' + municipioId);
+
+                        $("#input-municipio").val(municipioId).change();
+                    });
+                }                
             }
 
-            $(document).ready(function(){
+            $(document).ready(function() {
 
                 // Coleta municipios provindos do backend no início
-                var municipios = {!! json_encode($municipios) !!} ;
+                var municipios = {!! json_encode($municipios) !!};
 
+                $.each(municipios, function(index, municipio) {
+                    municipioIdFromNome[municipio.nome] = municipio.id;
+                });
 
                 // Observa mudanças no select de municípios e aplica predição
                 $("#input-municipio").change(function() {
@@ -326,7 +348,7 @@
                     // mostra o gráfico de desflorestamento
                     desflorestamento = municipio.desflorestamento.map(x => (x.desflorestamento/municipio.area)).splice(5);
                     x_labels = municipio.desflorestamento.map(x => x.ano).splice(5);
-                    title = "Deslorestamento de " + municipio.nome + ' ao longo dos anos';
+                    title = "Dados Reais de Desflorestamento de " + municipio.nome + ' ao longo dos anos';
                     $('#chart').height(700);
                     make_chart(desflorestamento, x_labels, title);
                 }
