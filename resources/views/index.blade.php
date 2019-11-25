@@ -188,12 +188,10 @@
                 </div>
             </div>
 
-            <!--
             <div class="div-map">
                 <div id="map"></div>
             </div>
-            -->
-            <iframe id="map" src="https://www.google.com/maps/d/embed?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M" width="100%" height="650"></iframe>
+            <!--<iframe id="map" src="https://www.google.com/maps/d/embed?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M" width="100%" height="650"></iframe>-->
 
             <div class="row mb-4">
                 <div class="col text-center" style="color: #404040">
@@ -256,7 +254,7 @@
         <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY', '') }}&callback=initMap"></script>
 
         <script>
-            var newMap = false;
+            var newMap = true;
             var municipioIdFromNome = [];   // view para acelerar a busca do id do municipio
 
             function initMap() {
@@ -265,20 +263,20 @@
                 }
 
                 var map = new google.maps.Map(document.getElementById('map'), 
-                                            {zoom: 5, center: new google.maps.LatLng(-7.744, -52.821)});
+                                            { zoom: 5, center: new google.maps.LatLng(-7.744, -52.821) });
 
                 var kmlSrcList = [
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=LOnA1rvXc8I&cid=mp&cv=pJLDrB920vI.pt_BR.', // RR/AP/AM
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=O4zOlo71oyw&cid=mp&cv=pJLDrB920vI.pt_BR.', // TO
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=BxHHQJIiwdI&cid=mp&cv=pJLDrB920vI.pt_BR.', // PA
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=2ogwv_wmPkg&cid=mp&cv=pJLDrB920vI.pt_BR.', // RO
-                //    '', // MA
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=nEfYkB7-nT0&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 1
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=8GJQUFLj42I&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 2
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=wbhiX1tMAsk&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 3
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=TRcqsy6bh6A&cid=mp&cv=pJLDrB920vI.pt_BR.', // MT 4
-                    'https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=oAvt8oeD77M&cid=mp&cv=pJLDrB920vI.pt_BR.'  // AC
-                ];                            
+                    'http://bit.ly/2rkK038', // RR/AP/AM (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=LOnA1rvXc8I&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/34kUqy6', // TO  (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=O4zOlo71oyw&cid=mp&cv=pJLDrB920vI.pt_BR.) 
+                    'http://bit.ly/34eh8YN', // PA  (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=BxHHQJIiwdI&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/2OkBBW8', // RO  (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=2ogwv_wmPkg&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/33lwARA', // MA  (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=j86ArSm6rmM&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/2XIDfEa', // MT1 (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=nEfYkB7-nT0&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/2pKwBke', // MT2 (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=8GJQUFLj42I&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/34jYbUG', // MT3 (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=wbhiX1tMAsk&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/2XOMEKr', // MT4 (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=TRcqsy6bh6A&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                    'http://bit.ly/35uclTl'  // AC  (https://www.google.com/maps/d/kml?mid=1Thd9ixT1UCnlkmioZ9tlkxm3G_av1l9M&lid=oAvt8oeD77M&cid=mp&cv=pJLDrB920vI.pt_BR.)
+                ];
 
                 for (var index in kmlSrcList) {
                     var src = kmlSrcList[index];
