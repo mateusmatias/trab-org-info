@@ -13,8 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         set_time_limit ( 10000 );
-	$sql = base_path('database/seeds/trab_org_info.sql');
-	DB::unprepared(file_get_contents($sql));
+        $this->call(EstadosSeeder::class);
+        $this->call(MunicipiosSeeder::class);
+        $this->call(DesflorestamentosSeeder::class);
+        $this->call(RelationsSeeder::class);
+        $this->call(ModelosLinearesSeeder::class);
         set_time_limit ( 300 );
     }
 }
