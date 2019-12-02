@@ -15,4 +15,11 @@ class HomeController
 
         return view('index', ['municipios' => $municipios]);
     }
+
+    public function indexVue()
+    {
+        $municipios = Municipio::whereNotNull('area')->with(['desflorestamento', 'modelo'])->get();
+
+        return view('index-vue', ['municipios' => $municipios]);
+    }
 }

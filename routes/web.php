@@ -13,3 +13,4 @@
 
 
 Route::get('/', 'HomeController@index');
+Route::get('/pagina-inicial-vue', 'HomeController@indexVue');
