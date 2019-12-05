@@ -334,8 +334,8 @@
 
                     // calcula predição
                     if (municipio && data){
-                        var a = municipio.modelo.a;
-                        var b = municipio.modelo.b;
+                        var a = parseFloat(municipio.modelo.a);
+                        var b = parseFloat(municipio.modelo.b);
                         var x = 1.0*data.split('-')[0] + ((data.split('-')[1] - 1)*30 + 1.0*data.split('-')[2])/365.0;
                         var predicao = parseFloat(100*(a* x + b)).toFixed(2) + '%';
                         $('#predicao').text(predicao);
