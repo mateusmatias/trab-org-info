@@ -156,14 +156,14 @@
                     </v-row>
 
                     <v-row class="mb-5">
-                        <v-col align="center">
-                            <div class="mb-3">
+                        <v-col cols="12" md="6" lg="7" align="left" style="background-image: linear-gradient(to right, rgba(0, 255, 0, 0.1) , rgba(0,0,0,0));">
+                            <div class="mb-3 px-5">
                                 Um dos problemas enfretados na região da Amazônia é o desmatamento, organizações como o INPE
                                 (Instituto Nacional de Pesquisas Espaciais) coletam constantemente diversos dados sobre a região
                                 da Amazõnia Legal, tais dados foram usados para criar um modelo estatístico capaz de prever o desmatamento em uma data qualquer.
                             </div>
 
-                            <div class="mb-2">
+                            <div class="mb-2 px-5">
                                 O projeto PRODES do INPE faz uso de satélites da classe LANDSAT (20 a 30 metros de resolução espacial)
                                 para monitoramento da Amazônia Legal, o monitoramento gera um acervo de dados que possuem várias classificações
                                 (desmatamento, floresta, não floresta, hidrografia e nuvem). As estimativas do PRODES são consideradas
@@ -172,34 +172,34 @@
                             </div>
                         </v-col>
 
-                        <v-col class="pa-5" align="center" justify="center">
-                            <img src="{{ asset('/img/altamira.png') }}" width="75%"><br>
-                            Área desflorestada em Altamira ao longo dos anos.
+                        <v-col cols="12" md="6" lg="5" class="pa-5" align="center" justify="center">
+                            <v-img src="{{ asset('/img/altamira.png') }}" width="75%" class="elevation-12"></v-img><br>
+                            <span class="subtitle-1 grey--text text--darken-2"> Área desflorestada em Altamira ao longo dos anos. </span>
                         </v-col>
                     </v-row>
 
                     <v-row class="mt-5 pb-5">
-                        <v-col class="pa-5" align="center" justify="center">
-                            <img src="{{ asset('/img/altamira_ajuste1.png') }}" width="75%"><br>
-                            Ajuste linear do desflorestamento de Altamira.
+                        <v-col cols="12" md="6" lg="5" class="pa-5" align="center" justify="center">
+                            <img src="{{ asset('/img/altamira_ajuste1.png') }}" width="75%" class="elevation-12"><br>
+                            <span class="subtitle-1 grey--text text--darken-2"> Ajuste linear do desflorestamento de Altamira. </span>
                         </v-col>
 
-                        <v-col>
-                            <div class="mb-3">
+                        <v-col cols="12" md="6" lg="7" align="right" style="background-image: linear-gradient(to left, rgba(0, 255, 0, 0.1) , rgba(0,0,0,0));">
+                            <div class="mb-3 px-5">
                                 Com os dados de origem confiável verificamos e filtramos então o conjunto em busca de possíveis dados faltantes, inconsistentes,
                                 i.e, poluição. Em nosso modelo simples focamos apenas nos atributos Município, Área do Município e Área de desflorestamento.
                                 A área de desflorestamento é o acúmulo de área sem floresta no município até o ano observado. Uma leve visualização do desmatamento ao longo
                                 dos anos no município de Altamira no Pará nos sugeriu um modelo simples e bem conhecido, o linear.
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 px-5">
                                 Como são muitos municípios para se analisar fizemos uma suposição, todo município tem um padrão
                                 de comportamento de desflorestamento similar à Altamira, ou seja, linear. Desta forma modelamos cada município
                                 e salvamos os coeficientes "a" e "b" das retas ajustadas em um banco de dados, com isso podemos fazer extrapolações para
                                 prever o índice de desflorestamento em uma data futura. A ferramenta abaixo oferece esta funcionalidade.
                             </div>
 
-                            <div class="mb-2">
+                            <div class="mb-2 px-5">
                                 Fonte dos dados: <a href="http://www.dpi.inpe.br/prodesdigital/prodesmunicipal.php">http://www.dpi.inpe.br/prodesdigital/prodesmunicipal.php</a>
                             </div>
                         </v-col>
